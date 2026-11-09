@@ -195,12 +195,7 @@ class ScreenCaptureService : Service() {
 
     /** Phone B sent a touch or key event — replay it on this phone's screen. */
     private fun handleRemoteInput(text: String) {
-        Log.d(TAG, "Remote input: $text")
-        val touch = TouchAccessibilityService.instance
-        if (touch == null) {
-            Log.w(TAG, "Accessibility service not running, ignoring touch")
-            return
-        }
+        val touch = TouchAccessibilityService.instance ?: return
         try {
             val json = JSONObject(text)
             val type = json.optString("t")

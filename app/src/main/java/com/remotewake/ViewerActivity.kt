@@ -4,10 +4,8 @@ import android.app.Activity
 import android.graphics.BitmapFactory
 import android.graphics.Color
 import android.os.Bundle
-import android.util.Log
 import android.view.MotionEvent
 import android.view.View
-import android.view.WindowInsets
 import android.widget.ImageView
 import android.widget.TextView
 import android.widget.Toast
@@ -76,7 +74,6 @@ class ViewerActivity : Activity() {
 
         // Send touches to Phone A, with coordinates normalised to 0–1 so screen-size differences
         // between Phone A and Phone B don't matter.
-        imageView.isClickable = true
         imageView.setOnTouchListener { v, event ->
             val conn = connection ?: return@setOnTouchListener true
 
@@ -109,9 +106,7 @@ class ViewerActivity : Activity() {
                 else -> return@setOnTouchListener true
             }
 
-            val cmd = "{\"t\":\"$type\",\"x\":$x,\"y\":$y}"
-            Log.d(TAG, "Touch $type at ($x,$y) → $cmd")
-            conn.sendCommand(cmd)
+            conn.sendCommand("{\"t\":\"$type\",\"x\":$x,\"y\":$y}")
             true
         }
     }
@@ -122,7 +117,4 @@ class ViewerActivity : Activity() {
         super.onDestroy()
     }
 
-    companion object {
-        private const val TAG = "Viewer"
-    }
 }
