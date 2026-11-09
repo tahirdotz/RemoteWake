@@ -31,7 +31,8 @@ import java.io.ByteArrayOutputStream
  * Phone B through the relay. Also receives touch commands from Phone B and passes them
  * to [TouchAccessibilityService].
  *
- * Must be a foreground service with type MEDIA_PROJECTION (Android 14+).
+ * Approve screen sharing once before leaving the office. This service keeps running
+ * and auto-reconnects to the relay if the connection drops — no second approval needed.
  */
 class ScreenCaptureService : Service() {
 
@@ -41,9 +42,14 @@ class ScreenCaptureService : Service() {
     private var connection: ControlConnection? = null
     private val captureThread = HandlerThread("capture").apply { start() }
     private val captureHandler = Handler(captureThread.looper)
+    private val mainHandler = Handler(android.os.Looper.getMainLooper())
 
     private var lastFrameTime = 0L
     private val frameIntervalMs: Long = 100 // 10 FPS
+
+    private var captureStarted = false
+    private var retryCount = 0
+    private var stopping = false
 
     override fun onBind(intent: Intent?): IBinder? = null
 
@@ -60,22 +66,18 @@ class ScreenCaptureService : Service() {
         )
 
         if (intent?.action == ACTION_STOP) {
+            stopping = true
             stopSelf()
             return START_NOT_STICKY
         }
+
+        // If we already have a projection running, ignore duplicate starts.
+        if (mediaProjection != null) return START_STICKY
 
         val resultCode = intent?.getIntExtra(EXTRA_RESULT_CODE, 0) ?: 0
         @Suppress("DEPRECATION")
         val resultData: Intent? = intent?.getParcelableExtra(EXTRA_RESULT_DATA)
         if (resultData == null || resultCode == 0) {
-            stopSelf()
-            return START_NOT_STICKY
-        }
-
-        val prefs = Prefs(this)
-        val relayUrl = prefs.controlRelay
-        val code = prefs.targetCode
-        if (relayUrl == null || code == null) {
             stopSelf()
             return START_NOT_STICKY
         }
@@ -87,19 +89,38 @@ class ScreenCaptureService : Service() {
             return START_NOT_STICKY
         }
 
-        // Connect to the relay, then start capturing.
+        connectToRelay()
+
+        // START_STICKY: if the system kills the service, restart it (projection stays valid).
+        return START_STICKY
+    }
+
+    private fun connectToRelay() {
+        val prefs = Prefs(this)
+        val relayUrl = prefs.controlRelay ?: return
+        val code = prefs.targetCode ?: return
+
+        connection?.disconnect()
         connection = ControlConnection(relayUrl, code, "source")
+        SharingState.update(SharingState.Status.CONNECTING)
+
         connection!!.connect(object : ControlConnection.Listener {
             override fun onConnected() {
-                Log.i(TAG, "Relay connected, starting capture")
+                Log.i(TAG, "Relay connected")
+                retryCount = 0
                 SharingState.update(SharingState.Status.SHARING)
-                startCapture()
+                if (!captureStarted) startCapture()
             }
 
             override fun onDisconnected(reason: String) {
                 Log.i(TAG, "Relay disconnected: $reason")
-                SharingState.update(SharingState.Status.STOPPED)
-                // Try to reconnect by restarting the service.
+                if (stopping) return
+                // Auto-reconnect with exponential backoff. MediaProjection stays alive.
+                SharingState.update(SharingState.Status.CONNECTING)
+                val delay = RETRY_DELAYS[retryCount.coerceAtMost(RETRY_DELAYS.size - 1)]
+                retryCount++
+                Log.i(TAG, "Reconnecting in ${delay / 1000}s (attempt $retryCount)")
+                mainHandler.postDelayed({ if (!stopping) connectToRelay() }, delay)
             }
 
             override fun onFrame(jpeg: ByteArray) { /* source doesn't receive frames */ }
@@ -108,12 +129,11 @@ class ScreenCaptureService : Service() {
                 handleRemoteInput(text)
             }
         })
-        SharingState.update(SharingState.Status.CONNECTING)
-
-        return START_NOT_STICKY
     }
 
     override fun onDestroy() {
+        stopping = true
+        mainHandler.removeCallbacksAndMessages(null)
         virtualDisplay?.release()
         imageReader?.close()
         mediaProjection?.stop()
@@ -124,6 +144,9 @@ class ScreenCaptureService : Service() {
     }
 
     private fun startCapture() {
+        if (captureStarted) return
+        captureStarted = true
+
         val wm = getSystemService(WindowManager::class.java)
         val metrics = DisplayMetrics()
         @Suppress("DEPRECATION")
@@ -249,6 +272,7 @@ class ScreenCaptureService : Service() {
         const val EXTRA_RESULT_DATA = "resultData"
         private const val SCALE_FACTOR = 0.5f
         private const val JPEG_QUALITY = 35
+        private val RETRY_DELAYS = longArrayOf(2_000, 5_000, 10_000, 30_000, 60_000)
 
         fun start(context: Context, resultCode: Int, resultData: Intent) {
             val intent = Intent(context, ScreenCaptureService::class.java)
