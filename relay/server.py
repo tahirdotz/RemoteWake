@@ -20,6 +20,7 @@ Deploy with TLS (recommended):
 
 import asyncio
 import logging
+import os
 from collections import defaultdict
 import websockets
 
@@ -64,9 +65,10 @@ async def handler(ws):
 
 
 async def main():
+    port = int(os.environ.get("PORT", 8765))
     # max_size = 1 MB, enough for a compressed screen frame.
-    async with websockets.serve(handler, "0.0.0.0", 8765, max_size=2**20):
-        log.info("Relay listening on ws://0.0.0.0:8765")
+    async with websockets.serve(handler, "0.0.0.0", port, max_size=2**20):
+        log.info("Relay listening on ws://0.0.0.0:%d", port)
         await asyncio.Future()  # run forever
 
 
