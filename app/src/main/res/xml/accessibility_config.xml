@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Phone A only: allows the app to replay touch events that Phone B sends via the relay.
+     The user must enable it once in Settings → Accessibility → Remote Wake. -->
+<accessibility-service xmlns:android="http://schemas.android.com/apk/res/android"
+    android:description="@string/accessibility_description"
+    android:accessibilityFeedbackType="feedbackGeneric"
+    android:canPerformGestures="true"
+    android:settingsActivity="com.remotewake.MainActivity" />

@@ -1,0 +1,115 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:fitsSystemWindows="true">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="20dp">
+
+        <TextView
+            style="@style/Heading"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/remote_title" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <EditText
+                android:id="@+id/code_input"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:autofillHints=""
+                android:fontFamily="monospace"
+                android:hint="@string/code_hint"
+                android:importantForAutofill="no"
+                android:inputType="textNoSuggestions|textVisiblePassword"
+                android:maxLength="24" />
+
+            <Button
+                android:id="@+id/save_code"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/save" />
+        </LinearLayout>
+
+        <Button
+            android:id="@+id/wake"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:minHeight="88dp"
+            android:text="@string/wake"
+            android:textSize="22sp" />
+
+        <Button
+            android:id="@+id/ping"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:text="@string/ping" />
+
+        <TextView
+            android:id="@+id/remote_status"
+            style="@style/Body"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:minLines="4"
+            android:textIsSelectable="true" />
+
+        <!-- Screen viewer -->
+        <TextView
+            style="@style/Section"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/sharing_title" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <EditText
+                android:id="@+id/control_relay_input"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:hint="@string/control_relay_hint"
+                android:importantForAutofill="no"
+                android:inputType="textUri" />
+
+            <Button
+                android:id="@+id/save_control_relay"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/save" />
+        </LinearLayout>
+
+        <Button
+            android:id="@+id/view_phone_a"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:minHeight="64dp"
+            android:text="@string/view_phone_a"
+            android:textSize="18sp" />
+
+        <include layout="@layout/server_settings" />
+
+        <Button
+            android:id="@+id/switch_role"
+            style="?android:attr/borderlessButtonStyle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="24dp"
+            android:text="@string/switch_role" />
+    </LinearLayout>
+</ScrollView>

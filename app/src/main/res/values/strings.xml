@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Remote Wake</string>
+
+    <!-- Choosing a role -->
+    <string name="choose_title">Which phone is this?</string>
+    <string name="choose_body">Install this app on both phones. One stays in the office and gets woken (Phone A). The other is the remote you carry (Phone B). They can be on different networks.</string>
+    <string name="choose_target">This is Phone A (the office phone)</string>
+    <string name="choose_remote">This is Phone B (the remote)</string>
+    <string name="switch_role">Change this phone\'s role</string>
+
+    <!-- Phone A -->
+    <string name="target_title">Phone A — gets woken</string>
+    <string name="pairing_code">Pairing code (type this on Phone B)</string>
+    <string name="share_code">Share code</string>
+    <string name="share_code_text">Remote Wake pairing code: %1$s</string>
+    <string name="new_code">New code</string>
+    <string name="new_code_title">Make a new pairing code?</string>
+    <string name="new_code_message">Phone B will stop working until you type the new code on it.</string>
+    <string name="start_listening">Start listening</string>
+    <string name="stop_listening">Stop listening</string>
+    <string name="status_off">Not listening. Phone B cannot wake this phone.</string>
+    <string name="status_connecting">Connecting to the relay…</string>
+    <string name="status_connected">✅ Listening. Phone B can wake this phone.</string>
+    <string name="status_retrying">⚠️ Not connected, retrying: %1$s</string>
+    <string name="relay_closed">the relay closed the connection</string>
+    <string name="setup_title">Setup checklist</string>
+    <string name="check_ok">✅ %1$s</string>
+    <string name="check_missing">❌ %1$s</string>
+    <string name="check_notifications">Notifications allowed</string>
+    <string name="check_full_screen">Full-screen notifications allowed (turns the screen on)</string>
+    <string name="check_battery">Battery usage unrestricted (stays connected when idle)</string>
+    <string name="fix">Fix</string>
+    <string name="never_woken">Not woken yet.</string>
+    <string name="last_woken">Last woken %1$s.</string>
+    <string name="test_wake">Test: lock this phone, wake it in 10 s</string>
+    <string name="test_wake_started">Lock this phone now. In 10 seconds a wake command goes through the relay and the screen should turn on.</string>
+
+    <!-- Phone B -->
+    <string name="remote_title">Phone B — the remote</string>
+    <string name="code_hint">Phone A\'s pairing code, e.g. abcd-efgh-jkmn-pqrs</string>
+    <string name="save">Save</string>
+    <string name="code_saved">Code saved</string>
+    <string name="code_invalid">That is not a pairing code. It has 16 letters and digits.</string>
+    <string name="wake">Wake Phone A</string>
+    <string name="ping">Check Phone A (without waking it)</string>
+    <string name="remote_needs_code">Type Phone A\'s pairing code above. You find it on Phone A\'s screen.</string>
+    <string name="remote_ready">Ready.</string>
+    <string name="remote_sending">Sending…</string>
+    <string name="remote_waiting">Sent. Waiting for Phone A to answer…</string>
+    <string name="remote_no_answer">❌ No answer from Phone A within 30 seconds.\n\nIt may be switched off, offline, or not listening. Check that its app says \"Listening\" and its battery usage is unrestricted.</string>
+    <string name="reply_awake">✅ Phone A is awake: its screen is on.\n%1$s\n\nIt is still locked with your pattern. Connect with your remote-control app now.</string>
+    <string name="reply_awake_but_dark">⚠️ Phone A got the command, but its screen did not turn on.\n%1$s\n\nOn Phone A, open Remote Wake and fix every ❌ in its setup checklist.</string>
+    <string name="reply_pong_on">✅ Phone A is online. Its screen is on.\n%1$s</string>
+    <string name="reply_pong_off">✅ Phone A is online. Its screen is off.\n%1$s</string>
+    <string name="battery_charging">Battery %1$d%%, charging.</string>
+    <string name="battery_not_charging">Battery %1$d%%, not charging.</string>
+    <string name="battery_unknown">Battery level unknown.</string>
+
+    <!-- Screen sharing (Phone A) -->
+    <string name="sharing_title">Screen sharing (remote control)</string>
+    <string name="control_relay_label">Control relay server (you host this yourself)</string>
+    <string name="control_relay_hint">ws://your-pc-ip:8765</string>
+    <string name="control_relay_saved">Relay saved</string>
+    <string name="control_relay_invalid">Must start with ws:// or wss://</string>
+    <string name="check_accessibility">Accessibility service (Remote Wake) enabled</string>
+    <string name="check_control_relay">Control relay server set</string>
+    <string name="start_sharing">Start screen sharing</string>
+    <string name="stop_sharing">Stop screen sharing</string>
+    <string name="sharing_status_off">Not sharing.</string>
+    <string name="sharing_status_connecting">Connecting to relay…</string>
+    <string name="sharing_status_sharing">📺 Sharing screen. Phone B can see and control this phone.</string>
+    <string name="sharing_needs_relay">Set the control relay server below first.</string>
+    <string name="sharing_needs_accessibility">Turn on the accessibility service first (tap Fix above).</string>
+    <string name="channel_sharing">Screen sharing</string>
+    <string name="notification_sharing_title">Sharing screen</string>
+    <string name="notification_sharing_text">Phone B can see and control this phone.</string>
+    <string name="accessibility_description">Allows your other phone (Phone B) to tap and swipe on this phone\'s screen through the relay. Only used during screen sharing.</string>
+
+    <!-- Viewer (Phone B) -->
+    <string name="view_phone_a">View &amp; control Phone A</string>
+    <string name="viewer_needs_setup">Set the control relay server and Phone A\'s pairing code first.</string>
+    <string name="viewer_connecting">Connecting to relay…</string>
+    <string name="viewer_connected">Connected. Waiting for Phone A to share its screen.</string>
+    <string name="viewer_disconnected">Disconnected: %1$s</string>
+    <string name="viewer_content_desc">Phone A\'s screen</string>
+
+    <!-- Shared -->
+    <string name="server_label">Wake relay server (both phones must use the same one)</string>
+    <string name="server_saved">Relay saved</string>
+    <string name="server_invalid">Must start with https://</string>
+    <string name="relay_error">❌ Could not reach the relay: %1$s\n\nCheck this phone\'s internet connection.</string>
+
+    <!-- Wake screen -->
+    <string name="wake_title">Woken by Phone B</string>
+    <string name="wake_time">At %1$s. The screen stays on for one minute.</string>
+    <string name="unlock">Unlock</string>
+    <string name="close">Close</string>
+
+    <!-- Notifications -->
+    <string name="channel_listening">Listening for Phone B</string>
+    <string name="channel_wake">Wake from Phone B</string>
+    <string name="notification_listening_title">Listening for Phone B</string>
+    <string name="notification_listening_text">Phone B can wake this phone.</string>
+    <string name="notification_wake_title">Woken by Phone B</string>
+    <string name="notification_wake_text">Tap to open.</string>
+    <string name="stop">Stop</string>
+</resources>

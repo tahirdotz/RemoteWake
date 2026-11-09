@@ -1,0 +1,197 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:fitsSystemWindows="true">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="20dp">
+
+        <TextView
+            style="@style/Heading"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/target_title" />
+
+        <TextView
+            android:id="@+id/status"
+            style="@style/Body"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+
+        <TextView
+            android:id="@+id/last_woken"
+            style="@style/Body"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="4dp"
+            android:textColor="?android:attr/textColorSecondary" />
+
+        <Button
+            android:id="@+id/toggle_listening"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp" />
+
+        <TextView
+            style="@style/Section"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/pairing_code" />
+
+        <TextView
+            android:id="@+id/code"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:fontFamily="monospace"
+            android:textIsSelectable="true"
+            android:textSize="26sp"
+            android:textStyle="bold" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <Button
+                android:id="@+id/share_code"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="@string/share_code" />
+
+            <Button
+                android:id="@+id/new_code"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:layout_weight="1"
+                android:text="@string/new_code" />
+        </LinearLayout>
+
+        <TextView
+            style="@style/Section"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/setup_title" />
+
+        <TextView
+            android:id="@+id/check_notifications"
+            style="@style/Body"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="4dp" />
+
+        <Button
+            android:id="@+id/fix_notifications"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/fix" />
+
+        <TextView
+            android:id="@+id/check_full_screen"
+            style="@style/Body"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="4dp" />
+
+        <Button
+            android:id="@+id/fix_full_screen"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/fix" />
+
+        <TextView
+            android:id="@+id/check_battery"
+            style="@style/Body"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="4dp" />
+
+        <Button
+            android:id="@+id/fix_battery"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/fix" />
+
+        <Button
+            android:id="@+id/test_wake"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:text="@string/test_wake" />
+
+        <!-- Screen sharing / remote control -->
+        <TextView
+            style="@style/Section"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/sharing_title" />
+
+        <TextView
+            android:id="@+id/sharing_status"
+            style="@style/Body"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+
+        <TextView
+            android:id="@+id/check_accessibility"
+            style="@style/Body"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="4dp" />
+
+        <Button
+            android:id="@+id/fix_accessibility"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/fix" />
+
+        <TextView
+            android:id="@+id/check_control_relay"
+            style="@style/Body"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="4dp" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <EditText
+                android:id="@+id/control_relay_input"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:hint="@string/control_relay_hint"
+                android:importantForAutofill="no"
+                android:inputType="textUri" />
+
+            <Button
+                android:id="@+id/save_control_relay"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/save" />
+        </LinearLayout>
+
+        <Button
+            android:id="@+id/toggle_sharing"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp" />
+
+        <include layout="@layout/server_settings" />
+
+        <Button
+            android:id="@+id/switch_role"
+            style="?android:attr/borderlessButtonStyle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="24dp"
+            android:text="@string/switch_role" />
+    </LinearLayout>
+</ScrollView>
